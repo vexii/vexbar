@@ -1,0 +1,24 @@
+#! /bin/bash
+
+if [ $(pgrep -cx piebar) -gt 1 ] ; then
+  printf "%s\n" "Piebar is running." >&2
+  exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+root_dir="$HOME/.config/piebar"
+. ${root_dir}/colors
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+clock -sf 'C%a %H:%M' > "$PANEL_FIFO" &
+mpc current -f 'M:A%artist%:T"%title%' > $PANEL_FIFO &
+bspc control --subscribe > "$PANEL_FIFO" &
+
+bspc config top_padding $PANEL_HEIGHT
+cat ${root_dir}/parser
+cat "$PANEL_FIFO" | ${root_dir}/parser | lemonbar -n "piebar" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLORS_FOREGROUND" -B "$COLORS_BACKGROUND" &
+
+wait

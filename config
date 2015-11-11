@@ -1,0 +1,3 @@
+PANEL_HEIGHT=22
+PANEL_FONT="xft:Source Code Pro:style=Mono:size=11"
+PANEL_FIFO="/tmp/piebar"
