@@ -5,7 +5,9 @@ module.exports = {
   updateTitle: (title) => {
     return {
       type: UPDATE_TITLE,
-      title,
+      payload: { 
+        title
+      },
     };
   },
 };
