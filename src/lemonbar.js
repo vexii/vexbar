@@ -15,10 +15,15 @@ module.exports = {
       "-f", font,
       "-o", "2",
     ]);
+    let children = [];
 
     return {
+      pid: bar.pid,
       write: function(state) {
         bar.stdin.write(format(state));
+      },
+      appendChildToContainer(child) {
+        children.push(child);
       }
     }
   }
