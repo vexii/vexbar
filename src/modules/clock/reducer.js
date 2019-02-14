@@ -1,9 +1,10 @@
 const actions = require("./actions");
-const initialState =  new Date();
+const { format } = require("date-fns");
+const initialState =  format(new Date(), 'HH:mm:ss')
 
 module.exports = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actions.UPDATE_CLOCK:
+    case actions.CLOCK_UPDATE:
       return payload.time;
     default:
       return state;

@@ -1,40 +1,38 @@
 //@flow
 
-const React = require('react');
-const Reconciler = require('react-reconciler'); 
-const container = require('../lemonbar');
-const { createElement } = require('./element');
+import * as React from 'react'
+import Reconciler from 'react-reconciler'
+import container, { type Lemonbar } from '../lemonbar'
+import { createElement } from './element'
+
+type RootHostContext = {
+
+}
+
+type ChildHostContext = {
+  type: string
+}
 
 const hostConfig = {
 
   now: Date.now,
 
-  getRootHostContext(rootContainer) {
+  getRootHostContext(rootContainer: Lemonbar) {
     console.log('getRootHostContext', rootContainer)
-    return {}
+    return { rootContainer }
   },
 
   getChildHostContext(parentContext, fiberType, root) {
-    console.log('getChildHostContext', fiberType)
-    return { }
+    // console.log('getChildHostContext', fiberType)
+    return { type: fiberType }
   },
 
   shouldSetTextContent(type, props) {
-    return type === 'text' ||
-      typeof props.children === 'string' ||
-      typeof props.children === 'number' 
+    return false
   },
 
-  createTextInstance(text) {
-    console.log('createTextInstance', text)
-    return {
-      type: 'text',
-      startTag: '',
-      endTag: '',
-      toString() {
-        return text
-      }
-    }
+  createTextInstance(text, ...arg) {
+    return createElement('text', { text })
   },
 
 
@@ -45,54 +43,46 @@ const hostConfig = {
     hostContext,
     container,
   ) {
-    console.log('create Instance')
+    // console.log('create Instance', type)
     return createElement(type, props)
   },
 
-  appendInitialChild() {
-    console.log('appendInitialChild')
+  appendInitialChild(parent: Element, child: Element) {
+    // console.log('appendInitialChild')
+    parent.appendChild(child)
   },
 
-  appendAllChildren() {
-    console.log('bulu ')
-  },
-
-  appendChildToContainer(bar, container, tag) {
-    console.log('appendChildToContainer', container, bar);
-    bar.appendChildToContainer(tag)
-    return { appendChildToContainer: '' }
-  },
-
-  finalizeInitialChildren(...args) {
-    console.log('finalizeInitialChildren')
+  finalizeInitialChildren(instance: Element, type: string) {
+    // console.log('finalizeInitialChildren')
     return false
   },
 
-  appendInitial(...args) {
-    console.log('appendInitial', args)
-    return { appendInitial: '' };
+  prepareForCommit() {
   },
 
-  prepareForCommit(...args) {
-    console.log('prepareForCommit', args);
-    return { prepareForCommit: '' }
+  resetAfterCommit() {
   },
 
-  resetAfterCommit(...args) {
-    console.log('resetAfterCommit', args);
-    return { resetAfterCommit: '' }
+  appendChildToContainer(bar, tag) {
+    bar.appendChildToContainer(tag)
+    bar.flush()
   },
 
-  commitMount(...args) {
-    console.log('commitMount', args)
+  commitTextUpdate(node, oldText, newText) {
+    node.updateValue(newText)
   },
 
-  supportsMutation: false,
+  supportsMutation: true,
+
 };
 
 const reconciler = Reconciler(hostConfig);
 
-function render(element, lemonbar, callback) {
+export function render(
+  element: React.Node,
+  lemonbar: {},
+  callback: ?Function
+): void {
 
   const container = reconciler.createContainer(lemonbar, false); 
 
@@ -104,24 +94,3 @@ function render(element, lemonbar, callback) {
   )
 }
 
-function App({ monitors }) {
-  return (
-    <React.Fragment>
-      {monitors.map((monitor, idx) => (
-        <monitor name={monitor} possition={idx} key={monitor}>
-        </monitor>
-      ))}
-    </React.Fragment>
-  )
-}
-
-render(
-  <App monitors={['portrait']} />,
-  container.init({
-    fontColor: "#d0d0d0",
-    barColor: "#3a3a3a",
-    format: function({ title, clock }) {
-      return `%{S0}%{r}${clock}%{S1}%{c}${title}%{r}%{A1:reboot:} reboot %{A}${clock}`
-    }
-  })
-)

@@ -1,15 +1,16 @@
-const reducer = require("./reducer");
-const actions = require("./actions");
-const { spawn } = require("child_process");
-const {
+// @flow
+import reducer from "./reducer"
+import actions from "./actions"
+import { spawn } from "child_process"
+import {
   dispatch,
   registerReducer
-} = require('./../../store.js');
+} from 'store'
 
 module.exports = {
   init: () => {
     registerReducer('title', reducer);
-    titleProcess = spawn("xtitle", ["-sf '%s'"]);
+    const titleProcess = spawn("xtitle", ["-sf '%s'"]);
     titleProcess.stdout.on("data", (data) => {
       const title = data.toString().replace(/\n|'/g, "");
       dispatch(actions.updateTitle(title));

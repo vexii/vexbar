@@ -1,40 +1,29 @@
-const reducer = require("./reducer"); 
+// @flow
+import reducer from './reducer'
+const { connect } = require('react-redux');
 const actions = require("./actions");
 const { format } = require("date-fns");
-const {
+import {
   dispatch,
-  registerReducer,
-  runSaga
-} = require('./../../store.js');
-const {
-  put,
-  take,
-  call
-} = require("redux-saga/effects");
+  registerReducer
+} from 'store'
 
-
-function* updateClock() {
-  console.log(':o')
-  const runner = yield call(setInterval(() => {
-    put(actions.update(format(new Date(), 'HH:mm')))
-  },1000))
-  yield runner;
+function Clock({ clock, title }) {
+  console.log('time:', title)
+  return (
+    title
+  )
 }
 
-function* watchClock() {
-  console.log('??????????????????')
-  take({
-    type: actions.CLOCK_START
-  }, updateClock)
-}
-
-runSaga(watchClock)
-registerReducer('clock', reducer);
 module.exports = {
+  Clock: connect(state => state)(Clock),
   reducer,
-  init: ({
-    dateFormat
-  }) => {
-    dispatch(actions.start())
+  init: (
+    dateFormat: string
+  ) => {
+    registerReducer('clock', reducer);
+    setInterval(() => {
+      dispatch(actions.update(format(new Date(), dateFormat)));
+    }, 1000);
   },
 };

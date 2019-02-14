@@ -1,4 +1,19 @@
+// @flow
 const { spawn } = require("child_process");
+
+export type Lemonbar = {
+  pid: string,
+  write(line: string): void,
+  appendChild(child: Element): void,
+}
+
+type LemonbarFlags = {
+  barColor?: string,
+  font?: string,
+  fontColor?: string,
+  format?: Function,
+  name?: string,
+}
 
 module.exports = {
   init: function({
@@ -7,23 +22,34 @@ module.exports = {
     fontColor = "#FF3497DB",
     format,
     name = "piebar",
-  }) {
+  }: LemonbarFlags) {
+
     const bar = spawn("lemonbar", [
       "-n", name,
       "-F", fontColor,
       "-B", barColor,
       "-f", font,
-      "-o", "2",
     ]);
-    let children = [];
+
+    let children: Element[] = [];
 
     return {
       pid: bar.pid,
-      write: function(state) {
-        bar.stdin.write(format(state));
+      write: function(state: any) {
+        if(format) {
+          bar.stdin.write(format(state));
+        }
       },
-      appendChildToContainer(child) {
+      writeRaw: function(string: string) {
+        bar.stdin.write(string)
+      },
+      appendChildToContainer(child: Element) {
         children.push(child);
+      },
+      flush() {
+        bar.stdin.write(
+          children.reduce((output, node) => output.concat(node.toString()), "")
+        )
       }
     }
   }

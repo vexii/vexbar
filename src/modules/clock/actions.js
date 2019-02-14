@@ -16,7 +16,7 @@ module.exports = {
     type: CLOCK_STOP,
   }),
 
-  update: (time) => ({
+  update: (time: Date) => ({
       type: CLOCK_UPDATE,
       payload: {
         time

@@ -1,6 +1,15 @@
 {
   "presets": [
+    ["@babel/env", {
+      "modules": "umd"
+    }],
     "@babel/preset-flow",
     "@babel/preset-react"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "extensions": [".js"]
+    }]
   ]
 }

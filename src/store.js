@@ -1,15 +1,10 @@
-const {
+import {
   combineReducers,
   createStore,
   applyMiddleware,
-} = require("redux");
-
-const createSagaMiddleware = require('redux-saga').default
-
-const sagaMiddleware = createSagaMiddleware()
+} from 'redux'
 
 const log = ({ getState }) => next => action => {
-  const oldstate = getState();
   const result = next(action);
   console.log("action", action);
   console.log("new state", getState());
@@ -20,7 +15,7 @@ const log = ({ getState }) => next => action => {
 const store = createStore(
   state => state,
   {},
-  applyMiddleware(log, sagaMiddleware)
+  applyMiddleware(log)
 );
 
 
@@ -37,5 +32,4 @@ module.exports = {
   registerReducer,
   store,
   dispatch: store.dispatch,
-  runSaga: sagaMiddleware.run,
 };
