@@ -5,9 +5,7 @@ import Reconciler from 'react-reconciler'
 import container, { type Lemonbar } from '../lemonbar'
 import { createElement } from './element'
 
-type RootHostContext = {
-
-}
+type RootHostContext = Lemonbar
 
 type ChildHostContext = {
   type: string
@@ -17,7 +15,7 @@ const hostConfig = {
 
   now: Date.now,
 
-  getRootHostContext(rootContainer: Lemonbar) {
+  getRootHostContext(rootContainer: RootHostContext) {
     console.log('getRootHostContext', rootContainer)
     return { rootContainer }
   },
@@ -31,8 +29,8 @@ const hostConfig = {
     return false
   },
 
-  createTextInstance(text, ...arg) {
-    return createElement('text', { text })
+  createTextInstance(text, hostConfig: RootHostContext) {
+    return createElement('text', { text }, hostConfig)
   },
 
 
@@ -40,11 +38,10 @@ const hostConfig = {
     type: string,
     props,
     rootContainerInstance,
-    hostContext,
+    hostContext: RootHostContext,
     container,
   ) {
-    // console.log('create Instance', type)
-    return createElement(type, props)
+    return createElement(type, props, hostContext)
   },
 
   appendInitialChild(parent: Element, child: Element) {

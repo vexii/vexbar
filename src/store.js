@@ -15,7 +15,7 @@ const log = ({ getState }) => next => action => {
 const store = createStore(
   state => state,
   {},
-  applyMiddleware(log)
+  // applyMiddleware(log)
 );
 
 

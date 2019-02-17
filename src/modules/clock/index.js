@@ -1,23 +1,22 @@
 // @flow
 import reducer from './reducer'
-const { connect } = require('react-redux');
-const actions = require("./actions");
-const { format } = require("date-fns");
+import { connect } from 'react-redux'
+import actions from './actions'
+import { format } from 'date-fns'
 import {
   dispatch,
   registerReducer
 } from 'store'
 
-function Clock({ clock, title }) {
-  console.log('time:', title)
+function Clock({ clock }) {
+
   return (
-    title
+    clock
   )
 }
 
 module.exports = {
   Clock: connect(state => state)(Clock),
-  reducer,
   init: (
     dateFormat: string
   ) => {

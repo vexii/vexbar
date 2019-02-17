@@ -3,8 +3,8 @@ const { spawn } = require("child_process");
 
 export type Lemonbar = {
   pid: string,
-  write(line: string): void,
   appendChild(child: Element): void,
+  flush(): void,
 }
 
 type LemonbarFlags = {
@@ -16,6 +16,7 @@ type LemonbarFlags = {
 }
 
 module.exports = {
+
   init: function({
     barColor = "#FF5AABE3", 
     font = "xft:Source Code Pro:style=Mono:size=9",
@@ -35,18 +36,14 @@ module.exports = {
 
     return {
       pid: bar.pid,
-      write: function(state: any) {
-        if(format) {
-          bar.stdin.write(format(state));
-        }
-      },
-      writeRaw: function(string: string) {
-        bar.stdin.write(string)
-      },
       appendChildToContainer(child: Element) {
         children.push(child);
       },
       flush() {
+        console.log(
+          'FLUSH',
+          children.reduce((output, node) => output.concat(node.toString()), "")
+        )
         bar.stdin.write(
           children.reduce((output, node) => output.concat(node.toString()), "")
         )

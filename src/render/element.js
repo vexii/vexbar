@@ -1,19 +1,21 @@
 // @flow
+import { type Lemonbar } from 'lemonbar'
 
 class Element {
 
+  isText: boolean
   type: string
   start: string
   end: string
   value: any
   children: Element[]
+  bar: Lemonbar
 
-  constructor(
-    type: string,
-    props: Object
-  ) {
+  constructor( type: string, props: Object, bar: Lemonbar): void {
     this.type = type
     this.children = []
+    this.bar = bar
+
     switch(type) {
 
       case 'monitor': {
@@ -36,6 +38,7 @@ class Element {
         this.start = ''
         this.end = ''
         this.value = props.text
+        this.isText = true
       } break
     }
   }
@@ -46,9 +49,14 @@ class Element {
 
   updateValue(value): void {
     this.value = value
+    this.bar.flush();
   }
 
   toString(): string {
+    if(this.isText){
+      return this.value
+    }
+
     const childrenString = this
       .children
       .filter(a => !!a).reduce((o, childElement) => {
@@ -64,6 +72,7 @@ class Element {
 export function createElement(
   type: string,
   props: Object,
+  bar: Lemonbar,
 ): Element {
-  return new Element(type, props)
+  return new Element(type, props, bar)
 }

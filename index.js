@@ -5,25 +5,21 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
 import { render } from 'render'
-import { Clock } from 'modules/clock'
-import title from 'modules/title'
+import { Clock, init } from 'modules/clock'
+import { Title, init as titleInit } from 'modules/title'
 import container from 'lemonbar'
 
 
-//init('HH:mm:ss');
-title.init()
-
-// store.subscribe(() => write(store.getState()) );
+init('HH:mm');
+titleInit()
 
 function Statusbar({ monitors }) {
   return (
     <Provider store={store}>
         <monitor name="portrait" possition={0}>
           <center>
-            <Clock />
+            <Title />
           </center>
-        </monitor>
-        <monitor name="horiozntal" possition={1}>
           <right>
             <Clock />
           </right>
