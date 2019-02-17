@@ -16,7 +16,6 @@ const hostConfig = {
   now: Date.now,
 
   getRootHostContext(rootContainer: RootHostContext) {
-    console.log('getRootHostContext', rootContainer)
     return { rootContainer }
   },
 

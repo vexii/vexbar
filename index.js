@@ -1,17 +1,17 @@
 #!/usr/bin/node
 "use strict";
 // @flow
-import React from 'react'
+import * as React from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
 import { render } from 'render'
 import { Clock, init } from 'modules/clock'
-import { Title, init as titleInit } from 'modules/title'
-import container from 'lemonbar'
+import  Title from 'modules/title'
+import Battery from 'modules/battery'
+import Lemonbar from 'lemonbar'
 
 
 init('HH:mm');
-titleInit()
 
 function Statusbar({ monitors }) {
   return (
@@ -21,6 +21,7 @@ function Statusbar({ monitors }) {
             <Title />
           </center>
           <right>
+            <Battery />
             <Clock />
           </right>
         </monitor>
@@ -30,7 +31,7 @@ function Statusbar({ monitors }) {
 
 render(
   <Statusbar monitors={['portrait', 'laptop']} />,
-  container.init({
+  Lemonbar({
     fontColor: "#d0d0d0",
     barColor: "#3a3a3a",
   })

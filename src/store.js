@@ -1,3 +1,4 @@
+// @flow
 import {
   combineReducers,
   createStore,
@@ -20,7 +21,7 @@ const store = createStore(
 
 
 const reducerMap = {};
-function registerReducer(name, reducer) {
+function registerReducer(name: string, reducer: Function) {
   if (reducerMap[name] && reducerMap[name] === reducer) {
     return;
   }
