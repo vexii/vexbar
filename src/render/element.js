@@ -24,6 +24,10 @@ class Element {
         this.end = ''
       } break
 
+      case 'left': {
+        this.start = '%{l}'
+        this.end = ''
+      } break
       case 'center': {
         this.start = '%{c}'
         this.end = ''
@@ -34,6 +38,11 @@ class Element {
         this.end = ''
       } break
 
+      case 'font': {
+        this.value = props.index
+        this.start = `%{T${this.value}}`
+        this.end = ''
+      } break
       case 'text': {
         this.start = ''
         this.end = ''
@@ -41,10 +50,12 @@ class Element {
         this.isText = true
       } break
       case 'color': {
+        this.value = props.color
         this.start = `%{F${this.value}}`
+        this.end = '%{F-}'
       } break
       case 'bcolor': {
-        
+
       } break
     }
   }
@@ -66,7 +77,6 @@ class Element {
     const childrenString = this
       .children
       .filter(a => !!a).reduce((o, childElement) => {
-        // console.log("child", childElement)
         o += childElement.toString()
         return o
       }, "")

@@ -17,11 +17,13 @@ function Statusbar({ monitors }) {
   return (
     <Provider store={store}>
         <monitor name="portrait" possition={0}>
+          <left>
+            <Battery />
+          </left>
           <center>
             <Title />
           </center>
           <right>
-            <Battery />
             <Clock />
           </right>
         </monitor>

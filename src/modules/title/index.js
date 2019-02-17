@@ -19,7 +19,7 @@ function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case UPDATE_TITLE: {
       return payload
-    }
+    } 
     default: {
       return state
     }
@@ -33,7 +33,7 @@ titleProcess.stdout.on("data", (data) => {
   dispatch(updateTitle(title));
 });
 
-function Title({ title }) {
+function Title({ title }) {
   return (
     title
   )
