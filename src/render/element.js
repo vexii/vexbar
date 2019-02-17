@@ -40,6 +40,12 @@ class Element {
         this.value = props.text
         this.isText = true
       } break
+      case 'color': {
+        this.start = `%{F${this.value}}`
+      } break
+      case 'bcolor': {
+        
+      } break
     }
   }
 
