@@ -53,7 +53,7 @@ watchProcess.stdout.on("data", (data) => {
 function Battery({ state, charge }) {
   return (
     <React.Fragment>
-      Battery: {state}: {charge}
+      {state !== 'Unknown' && `${state}:`} {charge}%
     </React.Fragment>
   )
 }

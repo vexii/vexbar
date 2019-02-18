@@ -1,4 +1,5 @@
 // @flow
+import * as React from 'react'
 import reducer from './reducer'
 import { connect } from 'react-redux'
 import actions from './actions'
@@ -8,21 +9,17 @@ import {
   registerReducer
 } from 'store'
 
-function Clock({ clock }) {
 
+function Clock({ clock, format }) {
   return (
-    clock
+    format(clock, format)
   )
 }
 
-module.exports = {
-  Clock: connect(state => state)(Clock),
-  init: (
-    dateFormat: string
-  ) => {
-    registerReducer('clock', reducer);
-    setInterval(() => {
-      dispatch(actions.update(format(new Date(), dateFormat)));
-    }, 1000);
-  },
-};
+registerReducer('clock', reducer);
+
+setInterval(() => {
+  dispatch(actions.update(new Date()))
+}, 1000);
+
+export default connect(state => state)(Clock)

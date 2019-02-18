@@ -20,23 +20,22 @@ const hostConfig = {
   },
 
   getChildHostContext(parentContext, fiberType, root) {
-    // console.log('getChildHostContext', fiberType)
     return { type: fiberType }
   },
 
-  shouldSetTextContent(type, props) {
+  shouldSetTextContent(type: string, props: ?Object) {
     return false
   },
 
-  createTextInstance(text, hostConfig: RootHostContext) {
-    return createElement('text', { text }, hostConfig)
+  createTextInstance(text: string, hostContext: RootHostContext) {
+    return createElement('text', { text }, hostContext)
   },
 
 
   createInstance(
     type: string,
-    props,
-    rootContainerInstance,
+    props: ?Object,
+    rootContainerInstance: Lemonbar,
     hostContext: RootHostContext,
     container,
   ) {
@@ -68,13 +67,22 @@ const hostConfig = {
     node.updateValue(newText)
   },
 
+  schedulePassiveEffects(...args) {
+    console.log(args)
+    return true
+  },
+
+  cancelPassiveEffects(...args) {
+    console.log(args)
+  },
+
   supportsMutation: true,
 
 };
 
 const reconciler = Reconciler(hostConfig);
 
-export function render(
+export default function render(
   element: React.Node,
   lemonbar: {},
   callback: ?Function

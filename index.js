@@ -4,14 +4,12 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
-import { render } from 'render'
-import { Clock, init } from 'modules/clock'
-import  Title from 'modules/title'
+import render from 'render'
+import Clock from 'modules/clock'
+import Title from 'modules/title'
 import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
-
-
-init('HH:mm');
+import Wifi from 'modules/wifi'
 
 function Statusbar({ monitors }) {
   return (
@@ -19,6 +17,7 @@ function Statusbar({ monitors }) {
         <monitor name="portrait" possition={0}>
           <left>
             <Battery />
+            <Wifi />
           </left>
           <center>
             <Title />
