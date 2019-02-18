@@ -15,29 +15,32 @@ type LemonbarFlags = {
 }
 
 export default function({
-    barColor = "#FF5AABE3", 
-    font = "xft:Source Code Pro:style=Mono:size=9",
-    fontColor = "#FF3497DB",
-    name = "piebar",
+  barColor = "#FF5AABE3", 
+  font = "xft:Source Code Pro:style=Mono:size=9",
+  fontColor = "#FF3497DB",
+  name = "piebar",
 }: LemonbarFlags){
-    const bar = spawn("lemonbar", [
-      "-n", name,
-      "-F", fontColor,
-      "-B", barColor,
-      "-f", font,
-    ]);
+  const bar = spawn("lemonbar", [
+    "-n", name,
+    "-F", fontColor,
+    "-B", barColor,
+    "-f", font,
+  ])
 
-    let children: Element[] = [];
+  bar.stdout.on('data', (data) => (
+    console.log(data)
+  ))
+  let children: Element[] = [];
 
-    return {
-      pid: bar.pid,
-      appendChildToContainer(child: Element) {
-        children.push(child);
-      },
-      flush() {
-        bar.stdin.write(
-          children.reduce((output, node) => output.concat(node.toString()), "")
-        )
-      }
+  return {
+    pid: bar.pid,
+    appendChildToContainer(child: Element) {
+      children.push(child);
+    },
+    flush() {
+      bar.stdin.write(
+        children.reduce((output, node) => output.concat(node.toString()), "")
+      )
     }
+  }
 }
