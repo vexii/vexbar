@@ -36,10 +36,7 @@ const wifiProcess = spawn('essid', [
 
 wifiProcess.stdout.on('data', (data) => {
   const wifiName = data.toString().replace(/\n|'/g, '')
-  dispatch({
-    type: WIFI_CHANGED,
-    payload: wifiName,
-  })
+  dispatch(updateWifi(wifiName))
 })
 
 function Wifi({ wifi }) {

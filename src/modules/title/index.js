@@ -28,6 +28,7 @@ function reducer(state = initialState, { type, payload }) {
 
 registerReducer('title', reducer);
 const titleProcess = spawn("xtitle", ["-sf '%s'"]);
+
 titleProcess.stdout.on("data", (data) => {
   const title = data.toString().replace(/\n|'/g, "");
   dispatch(updateTitle(title));
