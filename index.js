@@ -1,6 +1,6 @@
 #!/usr/bin/node
-"use strict";
 // @flow
+"use strict"
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
