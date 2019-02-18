@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Reconciler from 'react-reconciler'
 import container, { type Lemonbar } from '../lemonbar'
-import { createElement } from './element'
+import { createElement, type ElementProps } from './element'
 
 type RootHostContext = Lemonbar
 
@@ -23,11 +23,18 @@ const hostConfig = {
     return { type: fiberType }
   },
 
-  shouldSetTextContent(type: string, props: ?Object) {
+  shouldSetTextContent(
+    type: string,
+    { props }: { props: ?ElementProps }
+  ) {
+    console.log(type, props)
+    if(props && props.onClick) {
+      return true
+    }
     return false
   },
 
-  createTextInstance(text: string, hostContext: RootHostContext) {
+  createTextInstance(text: string, hostContext: RootHostContext, ...args) {
     return createElement('text', { text }, hostContext)
   },
 

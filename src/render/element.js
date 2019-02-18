@@ -1,6 +1,10 @@
 // @flow
 import { type Lemonbar } from 'lemonbar'
 
+export type ElementProps = {
+  onClick?: string
+}
+
 class Element {
 
   isText: boolean
