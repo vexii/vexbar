@@ -41,9 +41,9 @@ wifiProcess.stdout.on('data', (data) => {
 
 function Wifi({ wifi }) {
   return (
-    <text>
+    <React.Fragment>
       connect to {wifi} 
-    </text>
+    </React.Fragment>
   )
 }
 

@@ -17,7 +17,6 @@ class Element {
     this.bar = bar
 
     switch(type) {
-
       case 'monitor': {
         this.value = props.possition
         this.start = `%{S${this.value}}`
@@ -57,6 +56,11 @@ class Element {
       case 'bcolor': {
 
       } break
+    }
+    if(props.onClick) {
+      console.log('ppploc', props)
+      this.start = `%{A:${props.onClick}:}` + this.start
+      this.end += '%{A}'
     }
   }
 
