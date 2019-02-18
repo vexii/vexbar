@@ -17,13 +17,13 @@ function Statusbar({ monitors }) {
         <monitor name="portrait" possition={0}>
           <left>
             <Battery />
-            <Wifi />
+            <Wifi onClick="bulu" />
           </left>
           <center>
             <Title />
           </center>
           <right>
-            <Clock />
+            <Clock dateFormat="HH:mm" />
           </right>
         </monitor>
     </Provider>

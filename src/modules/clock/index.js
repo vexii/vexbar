@@ -10,9 +10,9 @@ import {
 } from 'store'
 
 
-function Clock({ clock, format }) {
+function Clock({ clock, dateFormat }) {
   return (
-    format(clock, format)
+    format(clock, dateFormat)
   )
 }
 
