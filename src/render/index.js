@@ -58,6 +58,9 @@ const hostConfig = {
     parent.appendChild(child)
   },
 
+  removeChild(parent, child) {
+    parent.removeChild(child)
+  },
   finalizeInitialChildren(instance: Element, type: string) {
     return false
   },
