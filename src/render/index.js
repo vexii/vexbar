@@ -51,17 +51,14 @@ const hostConfig = {
     childHostContext: ChildHostContext,
     container,
   ) {
-    // console.log('type',type)
     return createElement(type, props, childHostContext)
   },
 
   appendInitialChild(parent: Element, child: Element) {
-    // console.log('appendInitialChild')
     parent.appendChild(child)
   },
 
   finalizeInitialChildren(instance: Element, type: string) {
-    // console.log('finalizeInitialChildren')
     return false
   },
 
@@ -71,7 +68,6 @@ const hostConfig = {
     oldProps,
     newProps,
   ) {
-    // console.log(node, type)
     return false
   },
 
@@ -83,11 +79,14 @@ const hostConfig = {
 
   appendChildToContainer(bar, tag) {
     bar.appendChildToContainer(tag)
+    console.log(tag, tag.value)
     bar.flush()
   },
 
   commitTextUpdate(node, oldText, newText) {
-    node.updateValue(newText)
+    if(oldText !== newText) {
+      node.updateValue(newText)
+    }
   },
 
   insertBefore(...args) {

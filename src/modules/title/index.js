@@ -15,7 +15,7 @@ function updateTitle(title) {
   })
 }
 
-const initialState = ""
+const initialState = ''
 function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case UPDATE_TITLE: {
@@ -28,7 +28,9 @@ function reducer(state = initialState, { type, payload }) {
 }
 
 registerReducer('title', reducer);
-const titleProcess = spawn("xtitle", ["-sf '%s'"]);
+const titleProcess = spawn("xtitle", [
+"-s"
+]);
 
 titleProcess.stdout.on("data", (data) => {
   const title = data.toString().replace(/\n|'/g, "");
@@ -36,8 +38,11 @@ titleProcess.stdout.on("data", (data) => {
 });
 
 function Title({ title }) {
+  if(!title) {
+    return null
+  }
   return (
-    <text>
+    <text onClick="hhm">
       {title}
     </text>
   )

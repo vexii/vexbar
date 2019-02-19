@@ -8,7 +8,6 @@ export type ElementProps = {
 }
 
 class Element {
-
   isText: boolean
   type: string
   start: string
@@ -64,7 +63,6 @@ class Element {
       } break
     }
     if(props.onClick) {
-      console.log(props)
       this.start = `%{A:${props.onClick}:}` + this.start
       this.end += '%{A}'
     }
@@ -82,11 +80,10 @@ class Element {
   toString(): string {
     if(this.isText){
       if(Array.isArray(this.value)) {
-        console.log(this)
         const o = this.value.reduce((o, c) => o += c, '')
         return `${this.start}${o}${this.end}`
       }
-      return this.value
+      return `${this.start}${this.value}${this.end}`
     }
 
     const childrenString = this
