@@ -28,8 +28,9 @@ export default function({
   ])
 
   bar.stdout.on('data', (data) => (
-    console.log(data)
+    console.log('stdout', data.toString())
   ))
+
   let children: Element[] = [];
 
   return {

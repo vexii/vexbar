@@ -1,7 +1,9 @@
 // @flow
+import * as React from 'react'
 import { type Lemonbar } from 'lemonbar'
 
 export type ElementProps = {
+  children: React.Node,
   onClick?: string
 }
 
@@ -19,6 +21,8 @@ class Element {
     this.type = type
     this.children = []
     this.bar = bar
+    this.start = ''
+    this.end = ''
 
     switch(type) {
       case 'monitor': {
@@ -47,9 +51,7 @@ class Element {
         this.end = ''
       } break
       case 'text': {
-        this.start = ''
-        this.end = ''
-        this.value = props.text
+        this.value = props.children
         this.isText = true
       } break
       case 'color': {
@@ -62,7 +64,6 @@ class Element {
       } break
     }
     if(props.onClick) {
-      console.log('ppploc', props)
       this.start = `%{A:${props.onClick}:}` + this.start
       this.end += '%{A}'
     }
@@ -79,12 +80,14 @@ class Element {
 
   toString(): string {
     if(this.isText){
+      console.log(this.value)
       return this.value
     }
 
     const childrenString = this
       .children
-      .filter(a => !!a).reduce((o, childElement) => {
+      .filter(a => !!a)
+      .reduce((o, childElement) => {
         o += childElement.toString()
         return o
       }, "")

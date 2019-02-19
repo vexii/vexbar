@@ -10,20 +10,23 @@ import Title from 'modules/title'
 import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
 import Wifi from 'modules/wifi'
+import { name } from './package.json'
+
+process.title = name
 
 function Statusbar({ monitors }) {
   return (
     <Provider store={store}>
-        <monitor name="portrait" possition={0}>
+        <monitor name='portrait' possition={1}>
           <left>
-            <Battery />
-            <Wifi onClick="bulu" />
+            <Battery onClick="bulu bulu" />
+            <Wifi />
           </left>
           <center>
             <Title />
           </center>
           <right>
-            <Clock dateFormat="HH:mm" />
+            <Clock dateFormat='HH:mm' />
           </right>
         </monitor>
     </Provider>

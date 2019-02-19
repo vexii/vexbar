@@ -40,9 +40,12 @@ wifiProcess.stdout.on('data', (data) => {
 })
 
 function Wifi({ wifi }) {
+  if (!wifi) {
+    return null
+  }
   return (
     <React.Fragment>
-      connect to {wifi} 
+      online: {wifi} 
     </React.Fragment>
   )
 }

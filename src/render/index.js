@@ -9,44 +9,55 @@ type RootHostContext = Lemonbar
 
 type ChildHostContext = {
   type: string
-}
+} & RootHostContext
 
 const hostConfig = {
 
   now: Date.now,
 
   getRootHostContext(rootContainer: RootHostContext) {
-    return { rootContainer }
+    return rootContainer
   },
 
-  getChildHostContext(parentContext, fiberType, root) {
-    return { type: fiberType }
+  getChildHostContext(
+    parentContext,
+    fiberType,
+    hostContext: RootHostContext
+  ) {
+
+    return { ...hostContext, type: fiberType }
   },
 
   shouldSetTextContent(
     type: string,
-    { props }: { props: ?ElementProps }
+    props: ElementProps
   ) {
-    console.log(type, props)
-    if(props && props.onClick) {
+    if(!props.children) {
       return true
+    } else {
+      return false
     }
-    return false
   },
 
-  createTextInstance(text: string, hostContext: RootHostContext, ...args) {
-    return createElement('text', { text }, hostContext)
+  createTextInstance(
+    text: string, 
+    hostContext: RootHostContext, 
+    childHostContext,
+    fiber
+  ) {
+    console.log('text', text)
+    return createElement('text', { children: text }, hostContext)
   },
-
 
   createInstance(
     type: string,
     props: ?Object,
     rootContainerInstance: Lemonbar,
-    hostContext: RootHostContext,
+    childHostContext: ChildHostContext,
     container,
   ) {
-    return createElement(type, props, hostContext)
+    console.log('type',type)
+    return createElement(type, props, childHostContext)
   },
 
   appendInitialChild(parent: Element, child: Element) {
@@ -56,6 +67,15 @@ const hostConfig = {
 
   finalizeInitialChildren(instance: Element, type: string) {
     // console.log('finalizeInitialChildren')
+    return false
+  },
+
+  prepareUpdate(
+    node: Element,
+    type: string,
+    oldProps,
+    newProps,
+  ) {
     return false
   },
 
@@ -75,12 +95,12 @@ const hostConfig = {
   },
 
   schedulePassiveEffects(...args) {
-    console.log(args)
+    //console.log(args)
     return true
   },
 
   cancelPassiveEffects(...args) {
-    console.log(args)
+    //console.log(args)
   },
 
   supportsMutation: true,
