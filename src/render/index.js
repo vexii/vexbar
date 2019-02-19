@@ -79,7 +79,6 @@ const hostConfig = {
 
   appendChildToContainer(bar, tag) {
     bar.appendChildToContainer(tag)
-    console.log(tag, tag.value)
     bar.flush()
   },
 
@@ -92,7 +91,7 @@ const hostConfig = {
   insertBefore(...args) {
   },
 
-  appendChild(parent, child) {
+  appendChild(parent: Element, child: Element) {
     parent.appendChild(child)
   },
 
@@ -110,7 +109,7 @@ const reconciler = Reconciler(hostConfig);
 
 export default function render(
   element: React.Node,
-  lemonbar: {},
+  lemonbar: Lemonbar,
   callback: ?Function
 ): void {
 

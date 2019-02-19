@@ -2,8 +2,8 @@
 import { spawn } from 'child_process'
 
 export type Lemonbar = {
-  pid: string,
-  appendChild(child: Element): void,
+  pid: number,
+  appendChildToContainer(child: Element): void,
   flush(): void,
 }
 
@@ -19,7 +19,7 @@ export default function({
   font = "xft:Source Code Pro:style=Mono:size=9",
   fontColor = "#FF3497DB",
   name = "piebar",
-}: LemonbarFlags){
+}: LemonbarFlags): Lemonbar{
   const bar = spawn("lemonbar", [
     "-n", name,
     "-F", fontColor,
