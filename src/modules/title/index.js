@@ -37,9 +37,9 @@ titleProcess.stdout.on("data", (data) => {
 
 function Title({ title }) {
   return (
-    <action>
+    <text>
       {title}
-    </action>
+    </text>
   )
 }
 
