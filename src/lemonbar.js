@@ -28,7 +28,7 @@ export default function({
   ])
 
   bar.stdout.on('data', (data) => (
-    console.log('stdout', data.toString())
+    console.log('stdout', data.toString().replace(/\n|'/g, ""))
   ))
 
   let children: Element[] = [];

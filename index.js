@@ -19,7 +19,6 @@ function Statusbar({ monitors }) {
     <Provider store={store}>
         <monitor name='portrait' possition={1}>
           <left>
-            <Battery onClick="bulu bulu" />
             <Wifi />
           </left>
           <center>

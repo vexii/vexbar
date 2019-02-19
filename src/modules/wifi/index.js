@@ -44,9 +44,9 @@ function Wifi({ wifi }) {
     return null
   }
   return (
-    <React.Fragment>
+    <text onClick="omg">
       online: {wifi} 
-    </React.Fragment>
+    </text>
   )
 }
 

@@ -64,6 +64,7 @@ class Element {
       } break
     }
     if(props.onClick) {
+      console.log(props)
       this.start = `%{A:${props.onClick}:}` + this.start
       this.end += '%{A}'
     }
@@ -80,7 +81,11 @@ class Element {
 
   toString(): string {
     if(this.isText){
-      console.log(this.value)
+      if(Array.isArray(this.value)) {
+        console.log(this)
+        const o = this.value.reduce((o, c) => o += c, '')
+        return `${this.start}${o}${this.end}`
+      }
       return this.value
     }
 

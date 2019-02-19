@@ -32,11 +32,7 @@ const hostConfig = {
     type: string,
     props: ElementProps
   ) {
-    if(!props.children) {
-      return true
-    } else {
       return false
-    }
   },
 
   createTextInstance(
@@ -45,7 +41,6 @@ const hostConfig = {
     childHostContext,
     fiber
   ) {
-    console.log('text', text)
     return createElement('text', { children: text }, hostContext)
   },
 
@@ -56,7 +51,7 @@ const hostConfig = {
     childHostContext: ChildHostContext,
     container,
   ) {
-    console.log('type',type)
+    // console.log('type',type)
     return createElement(type, props, childHostContext)
   },
 
@@ -76,6 +71,7 @@ const hostConfig = {
     oldProps,
     newProps,
   ) {
+    // console.log(node, type)
     return false
   },
 
@@ -94,13 +90,17 @@ const hostConfig = {
     node.updateValue(newText)
   },
 
+  insertBefore(...args) {
+  },
+
+  appendChild(parent, child) {
+    parent.appendChild(child)
+  },
+
   schedulePassiveEffects(...args) {
-    //console.log(args)
-    return true
   },
 
   cancelPassiveEffects(...args) {
-    //console.log(args)
   },
 
   supportsMutation: true,
