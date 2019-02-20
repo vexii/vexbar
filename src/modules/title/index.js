@@ -29,7 +29,7 @@ function reducer(state = initialState, { type, payload }) {
 
 registerReducer('title', reducer);
 const titleProcess = spawn("xtitle", [
-"-s"
+"-sf '%s'"
 ]);
 
 titleProcess.stdout.on("data", (data) => {
@@ -38,11 +38,8 @@ titleProcess.stdout.on("data", (data) => {
 });
 
 function Title({ title }) {
-  if(!title) {
-    return null
-  }
   return (
-    <text onClick="hhm">
+    <text>
       {title}
     </text>
   )
