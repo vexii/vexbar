@@ -87,7 +87,7 @@ class Element {
 
   updateValue(value): void {
     this.value = value
-    this.bar.flush(this);
+    this.bar.flush();
   }
 
   toString(): string {
