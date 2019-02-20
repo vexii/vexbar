@@ -15,7 +15,7 @@ function updateTitle(title) {
   })
 }
 
-const initialState = ""
+const initialState = ''
 function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case UPDATE_TITLE: {
@@ -39,9 +39,9 @@ titleProcess.stdout.on("data", (data) => {
 
 function Title({ title }) {
   return (
-    <text>
+    <color hex='#87afaf'>
       {title}
-    </text>
+    </color>
   )
 }
 

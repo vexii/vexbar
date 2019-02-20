@@ -40,10 +40,13 @@ wifiProcess.stdout.on('data', (data) => {
 })
 
 function Wifi({ wifi }) {
+  if (!wifi) {
+    return null
+  }
   return (
-    <text>
-      connect to {wifi} 
-    </text>
+    <color hex='#27fdf5'>
+      online: {wifi} 
+    </color>
   )
 }
 

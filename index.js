@@ -10,7 +10,7 @@ import Title from 'modules/title'
 import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
 import Wifi from 'modules/wifi'
-import Gpmd from 'modules/gpmd'
+//import Gpmd from 'modules/gpmd'
 import { name } from './package.json'
 
 process.title = name
@@ -18,17 +18,16 @@ process.title = name
 function Statusbar({ monitors }) {
   return (
     <Provider store={store}>
-        <monitor name="portrait" possition={0}>
+        <monitor name='portrait' possition={1}>
           <left>
             <Battery />
             <Wifi />
-            <Gpmd />
           </left>
           <center>
             <Title />
           </center>
           <right>
-            <Clock />
+            <Clock dateFormat='HH:mm' />
           </right>
         </monitor>
     </Provider>

@@ -50,11 +50,12 @@ watchProcess.stdout.on("data", (data) => {
   dispatch(batteryStateChange(state, charge))
 })
 
-function Battery({ state, charge }) {
+function Battery({ state, charge, onClick }) {
+  console.log(state, charge)
   return (
-    <React.Fragment>
+    <color hex={charge > 30 ? '#ffafaf' : '#d0d0d0'}>
       {state !== 'Unknown' && `${state}:`} {charge}%
-    </React.Fragment>
+    </color>
   )
 }
 export default connect(({ battery }) => battery)(Battery)

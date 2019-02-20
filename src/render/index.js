@@ -3,52 +3,74 @@
 import * as React from 'react'
 import Reconciler from 'react-reconciler'
 import container, { type Lemonbar } from '../lemonbar'
-import { createElement } from './element'
+import { createElement, type ElementProps } from './element'
 
 type RootHostContext = Lemonbar
 
 type ChildHostContext = {
   type: string
-}
+} & RootHostContext
 
 const hostConfig = {
 
   now: Date.now,
 
   getRootHostContext(rootContainer: RootHostContext) {
-    return { rootContainer }
+    return rootContainer
   },
 
-  getChildHostContext(parentContext, fiberType, root) {
-    return { type: fiberType }
+  getChildHostContext(
+    parentContext,
+    fiberType,
+    hostContext: RootHostContext
+  ) {
+
+    return { ...hostContext, type: fiberType }
   },
 
-  shouldSetTextContent(type: string, props: ?Object) {
-    return false
+  shouldSetTextContent(
+    type: string,
+    props: ElementProps
+  ) {
+      return false
   },
 
-  createTextInstance(text: string, hostContext: RootHostContext) {
-    return createElement('text', { text }, hostContext)
+  createTextInstance(
+    text: string, 
+    hostContext: RootHostContext, 
+    childHostContext,
+    fiber
+  ) {
+    return createElement('text', { children: text }, hostContext)
   },
-
 
   createInstance(
     type: string,
     props: ?Object,
     rootContainerInstance: Lemonbar,
-    hostContext: RootHostContext,
+    childHostContext: ChildHostContext,
     container,
   ) {
-    return createElement(type, props, hostContext)
+    return createElement(type, props, childHostContext)
   },
 
   appendInitialChild(parent: Element, child: Element) {
-    // console.log('appendInitialChild')
     parent.appendChild(child)
   },
 
+  removeChild(parent, child) {
+    parent.removeChild(child)
+  },
   finalizeInitialChildren(instance: Element, type: string) {
-    // console.log('finalizeInitialChildren')
+    return false
+  },
+
+  prepareUpdate(
+    node: Element,
+    type: string,
+    oldProps,
+    newProps,
+  ) {
     return false
   },
 
@@ -64,16 +86,22 @@ const hostConfig = {
   },
 
   commitTextUpdate(node, oldText, newText) {
-    node.updateValue(newText)
+    if(oldText !== newText) {
+      node.updateValue(newText)
+    }
+  },
+
+  insertBefore(...args) {
+  },
+
+  appendChild(parent: Element, child: Element) {
+    parent.appendChild(child)
   },
 
   schedulePassiveEffects(...args) {
-    console.log(args)
-    return true
   },
 
   cancelPassiveEffects(...args) {
-    console.log(args)
   },
 
   supportsMutation: true,
@@ -84,7 +112,7 @@ const reconciler = Reconciler(hostConfig);
 
 export default function render(
   element: React.Node,
-  lemonbar: {},
+  lemonbar: Lemonbar,
   callback: ?Function
 ): void {
 

@@ -72,10 +72,6 @@ ws.on('message', (data) => {
     }
   }
 
-  if(channel === 'playState') {
-    console.log(channel, payload)
-  }
-
 })
 
 function Gpmd({ isPlaying, trackName, artistName }: GpmdState) {
@@ -90,4 +86,4 @@ function Gpmd({ isPlaying, trackName, artistName }: GpmdState) {
   return null
 }
 
-export default connect(({ gpmd }) => console.log(gpmd) || gpmd)(Gpmd)
+export default connect(({ gpmd }) => gpmd)(Gpmd)

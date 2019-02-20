@@ -10,9 +10,11 @@ import {
 } from 'store'
 
 
-function Clock({ clock, format }) {
+function Clock({ clock, dateFormat }) {
   return (
-    format(clock, format)
+    <color hex="#f765b8" onClick={() => console.log(':o')}>
+      {format(clock, dateFormat)} 
+    </color>
   )
 }
 

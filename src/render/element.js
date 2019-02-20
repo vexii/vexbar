@@ -1,5 +1,11 @@
 // @flow
-import { type Lemonbar } from 'lemonbar'
+import * as React from 'react'
+import { type Lemonbar } from 'lemonbar'
+
+export type ElementProps = {
+  children: React.Node,
+  onClick?: Function
+}
 
 class Element {
 
@@ -8,6 +14,7 @@ class Element {
   start: string
   end: string
   value: any
+  onClick: Function
   children: Element[]
   bar: Lemonbar
 
@@ -15,9 +22,10 @@ class Element {
     this.type = type
     this.children = []
     this.bar = bar
+    this.start = ''
+    this.end = ''
 
     switch(type) {
-
       case 'monitor': {
         this.value = props.possition
         this.start = `%{S${this.value}}`
@@ -28,6 +36,7 @@ class Element {
         this.start = '%{l}'
         this.end = ''
       } break
+
       case 'center': {
         this.start = '%{c}'
         this.end = ''
@@ -43,14 +52,14 @@ class Element {
         this.start = `%{T${this.value}}`
         this.end = ''
       } break
+
       case 'text': {
-        this.start = ''
-        this.end = ''
-        this.value = props.text
+        this.value = props.children
         this.isText = true
       } break
+
       case 'color': {
-        this.value = props.color
+        this.value = props.hex
         this.start = `%{F${this.value}}`
         this.end = '%{F-}'
       } break
@@ -58,6 +67,13 @@ class Element {
 
       } break
     }
+
+    if(props.onClick) {
+      const id = bar.registerOnClick(props.onClick)
+      this.start = `%{A:${id}:}` + this.start
+      this.end += '%{A}'
+    }
+
   }
 
   appendChild(child: Element): void {
@@ -71,17 +87,22 @@ class Element {
 
   updateValue(value): void {
     this.value = value
-    this.bar.flush();
+    this.bar.flush(this);
   }
 
   toString(): string {
     if(this.isText){
-      return this.value
+      if(Array.isArray(this.value)) {
+        const o = this.value.reduce((o, c) => o += c, '')
+        return `${this.start}${o}${this.end}`
+      }
+      return `${this.start}${this.value}${this.end}`
     }
 
     const childrenString = this
       .children
-      .filter(a => !!a).reduce((o, childElement) => {
+      .filter(a => !!a)
+      .reduce((o, childElement) => {
         o += childElement.toString()
         return o
       }, "")
