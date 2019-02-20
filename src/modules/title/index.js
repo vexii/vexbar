@@ -39,9 +39,9 @@ titleProcess.stdout.on("data", (data) => {
 
 function Title({ title }) {
   return (
-    <text>
+    <color hex='#87afaf'>
       {title}
-    </text>
+    </color>
   )
 }
 

@@ -12,7 +12,9 @@ import {
 
 function Clock({ clock, dateFormat }) {
   return (
-    format(clock, dateFormat)
+    <color hex="#f765b8" onClick={() => console.log(':o')}>
+      {format(clock, dateFormat)} 
+    </color>
   )
 }
 

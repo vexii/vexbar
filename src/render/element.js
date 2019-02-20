@@ -1,18 +1,20 @@
 // @flow
 import * as React from 'react'
-import { type Lemonbar } from 'lemonbar'
+import { type Lemonbar } from 'lemonbar'
 
 export type ElementProps = {
   children: React.Node,
-  onClick?: string
+  onClick?: Function
 }
 
 class Element {
+
   isText: boolean
   type: string
   start: string
   end: string
   value: any
+  onClick: Function
   children: Element[]
   bar: Lemonbar
 
@@ -57,7 +59,7 @@ class Element {
       } break
 
       case 'color': {
-        this.value = props.color
+        this.value = props.hex
         this.start = `%{F${this.value}}`
         this.end = '%{F-}'
       } break
@@ -67,9 +69,11 @@ class Element {
     }
 
     if(props.onClick) {
-      this.start = `%{A:${props.onClick}:}` + this.start
+      const id = bar.registerOnClick(props.onClick)
+      this.start = `%{A:${id}:}` + this.start
       this.end += '%{A}'
     }
+
   }
 
   appendChild(child: Element): void {
@@ -83,7 +87,7 @@ class Element {
 
   updateValue(value): void {
     this.value = value
-    this.bar.flush();
+    this.bar.flush(this);
   }
 
   toString(): string {

@@ -44,9 +44,9 @@ function Wifi({ wifi }) {
     return null
   }
   return (
-    <text onClick="omg">
+    <color hex='#27fdf5'>
       online: {wifi} 
-    </text>
+    </color>
   )
 }
 

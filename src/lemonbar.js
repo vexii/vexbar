@@ -1,9 +1,11 @@
 // @flow
 import { spawn } from 'child_process'
+import uuid from 'nanoid'
 
 export type Lemonbar = {
   pid: number,
   appendChildToContainer(child: Element): void,
+  registerOnClick(fn: Function): string,
   flush(): void,
 }
 
@@ -13,6 +15,8 @@ type LemonbarFlags = {
   fontColor?: string,
   name?: string,
 }
+
+const onClickFunctions = new Map()
 
 export default function({
   barColor = "#FF5AABE3", 
@@ -27,9 +31,11 @@ export default function({
     "-f", font,
   ])
 
-  bar.stdout.on('data', (data) => (
-    console.log('stdout', data.toString().replace(/\n|'/g, ""))
-  ))
+  bar.stdout.on('data', (data) => {
+    const id = data.toString().replace(/\n|'/g, "")
+    const onClick: Function = onClickFunctions.get(id)
+    onClick()
+  })
 
   const children: Element[] = [];
 
@@ -38,7 +44,12 @@ export default function({
     appendChildToContainer(child: Element) {
       children.push(child);
     },
-    flush() {
+    registerOnClick(fn) {
+      const id = uuid();
+      onClickFunctions.set(id, fn)
+      return id
+    },
+    flush(value) {
       bar.stdin.write(
         children.reduce((output, node) => output.concat(node.toString()), "")
       )

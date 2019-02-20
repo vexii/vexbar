@@ -51,10 +51,11 @@ watchProcess.stdout.on("data", (data) => {
 })
 
 function Battery({ state, charge, onClick }) {
+  console.log(state, charge)
   return (
-    <text onClick={onClick}>
+    <color hex={charge > 30 ? '#ffafaf' : '#d0d0d0'}>
       {state !== 'Unknown' && `${state}:`} {charge}%
-    </text>
+    </color>
   )
 }
 export default connect(({ battery }) => battery)(Battery)
