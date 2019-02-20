@@ -15,7 +15,6 @@ function useSpawn(processName: string, processArgs: string[]) {
       setProcessValue(data.toString().replace(/\n|'/g, '').trim())
     })
 
-    console.log(processValue)
     return () => (
       process.kill()
     )
