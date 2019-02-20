@@ -51,7 +51,6 @@ watchProcess.stdout.on("data", (data) => {
 })
 
 function Battery({ state, charge, onClick }) {
-  console.log(state, charge)
   return (
     <color hex={charge > 30 ? '#ffafaf' : '#d0d0d0'}>
       {state !== 'Unknown' && `${state}:`} {charge}%

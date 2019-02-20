@@ -6,20 +6,20 @@ import {
 } from 'react'
 
 function useSpawn(processName: string, processArgs: string[]) {
-  const [processValue, setProcessValue] = useState()
 
+  const [processValue, setProcessValue] = useState('')
   useEffect(function() {
     const process = spawn(processName, processArgs)
 
     process.stdout.on('data', data => {
-      setProcessValue(data.toString().replace(/\n|'/g, ''))
+      setProcessValue(data.toString().replace(/\n|'/g, '').trim())
     })
 
+    console.log(processValue)
     return () => (
       process.kill()
     )
-  }, [ processName, processArgs ])
-
+  }, [])
   return [ processValue ]
 }
 
