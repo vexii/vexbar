@@ -34,6 +34,7 @@ class Element {
         this.start = '%{l}'
         this.end = ''
       } break
+
       case 'center': {
         this.start = '%{c}'
         this.end = ''
@@ -49,10 +50,12 @@ class Element {
         this.start = `%{T${this.value}}`
         this.end = ''
       } break
+
       case 'text': {
         this.value = props.children
         this.isText = true
       } break
+
       case 'color': {
         this.value = props.color
         this.start = `%{F${this.value}}`
@@ -62,6 +65,7 @@ class Element {
 
       } break
     }
+
     if(props.onClick) {
       this.start = `%{A:${props.onClick}:}` + this.start
       this.end += '%{A}'

@@ -31,7 +31,7 @@ export default function({
     console.log('stdout', data.toString().replace(/\n|'/g, ""))
   ))
 
-  let children: Element[] = [];
+  const children: Element[] = [];
 
   return {
     pid: bar.pid,
