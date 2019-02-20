@@ -64,6 +64,11 @@ class Element {
     this.children.push(child)
   }
 
+  removeChild({ children, bar }: Element, child: Element) {
+    children.splice(children.indexOf(child), 1)
+    bar.flush()
+  }
+
   updateValue(value): void {
     this.value = value
     this.bar.flush();

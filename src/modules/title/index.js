@@ -28,7 +28,9 @@ function reducer(state = initialState, { type, payload }) {
 }
 
 registerReducer('title', reducer);
-const titleProcess = spawn("xtitle", ["-sf '%s'"]);
+const titleProcess = spawn("xtitle", [
+"-sf '%s'"
+]);
 
 titleProcess.stdout.on("data", (data) => {
   const title = data.toString().replace(/\n|'/g, "");
@@ -37,7 +39,9 @@ titleProcess.stdout.on("data", (data) => {
 
 function Title({ title }) {
   return (
-    title
+    <text>
+      {title}
+    </text>
   )
 }
 
