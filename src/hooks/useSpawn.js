@@ -12,7 +12,8 @@ function useSpawn(processName: string, processArgs: string[]) {
     const process = spawn(processName, processArgs)
 
     process.stdout.on('data', data => {
-      setProcessValue(data.toString().replace(/\n|'/g, '').trim())
+      const lines = data.toString().split(/\n|'/g)
+      setProcessValue(lines[0])
     })
 
     return () => (

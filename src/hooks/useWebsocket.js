@@ -18,7 +18,7 @@ function useWebsocket(
   useEffect(function() {
 
     if(connect && !isConnected) {
-      ws = new Websocket('ws://localhost:5672')
+      ws = new Websocket(address)
 
       ws.on('open', () => {
         setConnected(true)
