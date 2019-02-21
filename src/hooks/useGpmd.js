@@ -31,7 +31,7 @@ function reducer(state: GpmdState = initState, { type, payload }) {
 }
 
 function useGpmd() {
-  const [ isConnected, message ] = useWebsocket('ws://localhost:5672')
+  const [ isConnected, message, send ] = useWebsocket('ws://localhost:5672')
   const [ state: GpmdState, dispatch ] = useReducer(reducer, initState) 
 
   useEffect(() => {

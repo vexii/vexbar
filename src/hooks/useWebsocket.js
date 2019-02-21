@@ -7,31 +7,31 @@ import Websocket from 'ws'
 
 function useWebsocket(
   address: string,
-  connect: boolean = true
 ) {
 
-  let ws: ?WebSocket
+  const ws = new Websocket(address)
   const [ message, setMessage ] = useState({})
   const [ isConnected, setConnected ] = useState(false)
 
   useEffect(function() {
 
-    if(connect && !isConnected) {
-      ws = new Websocket(address)
+    ws.on('open', () => {
+      setConnected(true)
+    })
 
-      ws.on('open', () => {
-        setConnected(true)
-      })
-
-      ws.on('message', setMessage)
-    }
+    ws.on('message', setMessage)
 
     return function() {
       if(ws) {
-        ws.close()
+        ws.terminate()
       }
     }
-  }, [ connect ])
+  }, [ ])
+
+  if(isConnected) {
+    return [ isConnected, message, ws.send.bind(ws) ]
+  }
+
   return [ isConnected, message ]
 } 
 
