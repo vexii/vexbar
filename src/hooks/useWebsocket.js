@@ -1,6 +1,5 @@
 // @flow
 import {
-  useReducer,
   useEffect,
   useState,
 } from 'react'
@@ -11,7 +10,7 @@ function useWebsocket(
   connect: boolean = true
 ) {
 
-  let ws
+  let ws: ?WebSocket
   const [ message, setMessage ] = useState({})
   const [ isConnected, setConnected ] = useState(false)
 
@@ -25,7 +24,6 @@ function useWebsocket(
       })
 
       ws.on('message', setMessage)
-
     }
 
     return function() {
@@ -36,3 +34,5 @@ function useWebsocket(
   }, [ connect ])
   return [ isConnected, message ]
 } 
+
+export default useWebsocket

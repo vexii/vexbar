@@ -11,7 +11,7 @@ import Title from 'modules/title'
 import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
 import Wifi from 'modules/wifi'
-//import Gpmd from 'modules/gpmd'
+import Gpmd from 'modules/gpmd'
 import { name } from './package.json'
 
 process.title = name
@@ -28,6 +28,7 @@ function Statusbar({ monitors }) {
             <Title />
           </center>
           <right>
+            <Gpmd />
             <Clock dateFormat='HH:mm' />
           </right>
         </monitor>
