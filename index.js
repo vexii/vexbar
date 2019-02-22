@@ -28,7 +28,6 @@ function Statusbar({ monitors }) {
             <Title />
           </center>
           <right>
-            <Gpmd />
             <Clock dateFormat='HH:mm' />
           </right>
         </monitor>

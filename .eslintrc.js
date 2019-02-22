@@ -5,7 +5,8 @@ module.exports = {
   },
   "plugins": [
     "flowtype",
-    "react"
+    "react",
+    "react-hooks",
   ],
   "extends": "airbnb",
   "parserOptions": {
@@ -28,6 +29,7 @@ module.exports = {
     "semi": [
       "error",
       "never"
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error"
   }
 };
