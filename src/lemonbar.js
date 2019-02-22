@@ -26,6 +26,7 @@ export default function({
     "-n", name,
     "-F", fontColor,
     "-B", barColor,
+    "-f", 'Font Awesome',
     "-f", font,
   ])
 
