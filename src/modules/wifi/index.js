@@ -44,9 +44,9 @@ function Wifi({ wifi }) {
     return null
   }
   return (
-    <color hex='#27fdf5'>
+    <text fcolor='#27fdf5'>
       online: {wifi} 
-    </color>
+    </text>
   )
 }
 

@@ -16,8 +16,6 @@ type LemonbarFlags = {
   name?: string,
 }
 
-const onClickFunctions = new Map()
-
 export default function({
   barColor = "#FF5AABE3", 
   font = "xft:Source Code Pro:style=Mono:size=9",
@@ -28,8 +26,11 @@ export default function({
     "-n", name,
     "-F", fontColor,
     "-B", barColor,
+    "-f", 'Font Awesome',
     "-f", font,
   ])
+
+  const onClickFunctions = new Map()
 
   bar.stdout.on('data', (data) => {
     const id = data.toString().replace(/\n|'/g, "")

@@ -41,7 +41,7 @@ const hostConfig = {
     childHostContext,
     fiber
   ) {
-    return createElement('text', { children: text }, hostContext)
+    return createElement('textNode', { children: text }, hostContext)
   },
 
   createInstance(

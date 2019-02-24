@@ -10,11 +10,12 @@ import {
 } from 'store'
 
 
-function Clock({ clock, dateFormat }) {
+function Clock({ clock }) {
+  const [dateFormat, setDateFormat] = React.useState('HH:mm')
   return (
-    <color hex="#f765b8" onClick={() => console.log(':o')}>
+    <text fcolor="#f765b8" onClick={() => setDateFormat('Mo MMM')}>
       {format(clock, dateFormat)} 
-    </color>
+    </text>
   )
 }
 

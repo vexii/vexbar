@@ -1,11 +1,6 @@
 // @flow
 import * as React from 'react'
-import { spawn } from "child_process"
-import { connect } from 'react-redux'
-import {
-  dispatch,
-  registerReducer
-} from 'store'
+import useSpawn from 'hooks/useSpawn'
 
 const BATTERY_STATE_CHANGE: 'BATTERY_STATE_CHANGE' = 'BATTERY_STATE_CHANGE'
 
@@ -14,48 +9,22 @@ type BatteryState = {
   charge: number,
 }
 
-const initialState: BatteryState = {
-  state: 'Unknown',
-  charge: 0,
-}
-
-function batteryStateChange(
-  state: 'Charging' | 'Discharging' | 'Unknown' | 'Full',
-  charge: number,
-) {
-  return ({
-    type: BATTERY_STATE_CHANGE,
-    payload: { state, charge }
-  })
-}
-
-function reducer(
-  state: BatteryState = initialState,
-  {type, payload}
-): BatteryState {
-  switch(type) {
-    case BATTERY_STATE_CHANGE: {
-      return payload
-    } 
-    default: {
-      return state
-    }
+function Battery() {
+  const [state, charge] = useSpawn('battery', ['-sn1']).split(' ')
+  let icon = ''
+  if(+charge >= 25) {
+    icon = "" // quater
   }
-}
-
-registerReducer('battery', reducer)
-const watchProcess = spawn('battery', ['-sn1'])
-watchProcess.stdout.on("data", (data) => {
-  const [state, charge] = data.toString().replace(/\n|'/g, "").split(' ')
-  dispatch(batteryStateChange(state, charge))
-})
-
-function Battery({ state, charge, onClick }) {
-  console.log(state, charge)
+  if(+charge >= 50) {
+    icon = "" // half
+  }
+  if(+charge > 95) {
+    icon = "" //full
+  }
   return (
-    <color hex={charge > 30 ? '#ffafaf' : '#d0d0d0'}>
-      {state !== 'Unknown' && `${state}:`} {charge}%
-    </color>
+    <text>
+      {icon}  {state}
+    </text>
   )
 }
-export default connect(({ battery }) => battery)(Battery)
+export default Battery

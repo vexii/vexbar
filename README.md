@@ -1,4 +1,4 @@
-# react-lemonbar  
+# Vexbar
   
 an modular status bar framework based on `lemonbar` by lemonboy.
 

@@ -3,6 +3,7 @@ import {
   combineReducers,
   createStore,
   applyMiddleware,
+  type Store,
 } from 'redux'
 
 const log = ({ getState }) => next => action => {
@@ -13,10 +14,9 @@ const log = ({ getState }) => next => action => {
   return result;
 };
 
-const store = createStore(
+const store: Store<Function, { type:string } > = createStore(
   state => state,
   {},
-  // applyMiddleware(log)
 );
 
 

@@ -29,51 +29,47 @@ class Element {
       case 'monitor': {
         this.value = props.possition
         this.start = `%{S${this.value}}`
-        this.end = ''
       } break
 
       case 'left': {
         this.start = '%{l}'
-        this.end = ''
       } break
 
       case 'center': {
         this.start = '%{c}'
-        this.end = ''
       } break
 
       case 'right': {
         this.start = '%{r}'
-        this.end = ''
       } break
 
       case 'font': {
         this.value = props.index
         this.start = `%{T${this.value}}`
-        this.end = ''
       } break
 
       case 'text': {
         this.value = props.children
+      } break
+      case 'textNode': {
+        this.value = props.children
         this.isText = true
-      } break
-
-      case 'color': {
-        this.value = props.hex
-        this.start = `%{F${this.value}}`
-        this.end = '%{F-}'
-      } break
-      case 'bcolor': {
-
       } break
     }
 
     if(props.onClick) {
       const id = bar.registerOnClick(props.onClick)
       this.start = `%{A:${id}:}` + this.start
-      this.end += '%{A}'
+      this.end += '%{A}' + this.end
     }
-
+    if(props.fcolor) {
+      this.start = `%{F${props.fcolor}}` + this.start
+      this.end = '%{F-}' + this.end
+    }
+    if(props.bcolor) {
+      this.start = `%{B${props.bcolor}}` + this.start
+      this.end = '%{B-}' + this.end
+    }
   }
 
   appendChild(child: Element): void {
@@ -87,7 +83,7 @@ class Element {
 
   updateValue(value): void {
     this.value = value
-    this.bar.flush(this);
+    this.bar.flush();
   }
 
   toString(): string {

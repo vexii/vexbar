@@ -1,6 +1,7 @@
 #!/usr/bin/node
-"use strict";
 // @flow
+"use strict"
+
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
@@ -10,7 +11,7 @@ import Title from 'modules/title'
 import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
 import Wifi from 'modules/wifi'
-//import Gpmd from 'modules/gpmd'
+import Gpmd from 'modules/gpmd'
 import { name } from './package.json'
 
 process.title = name
