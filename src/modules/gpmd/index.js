@@ -9,9 +9,9 @@ function Gpmd() {
     artistName,
   }: GpmdState = useGpmd();
   return (
-    <color hex="#f765b8">
+    <text fcolor="#f765b8">
       {isPlaying ? ' ' + artistName + trackName : ''}
-    </color>
+    </text>
   )
 }
 

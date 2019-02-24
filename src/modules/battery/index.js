@@ -22,9 +22,9 @@ function Battery() {
     icon = "" //full
   }
   return (
-    <color>
+    <text>
       {icon}  {state}
-    </color>
+    </text>
   )
 }
 export default Battery

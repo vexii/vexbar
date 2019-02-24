@@ -13,9 +13,9 @@ import {
 function Clock({ clock }) {
   const [dateFormat, setDateFormat] = React.useState('HH:mm')
   return (
-    <color hex="#f765b8" onClick={() => setDateFormat('Mo MMM')}>
+    <text fcolor="#f765b8" onClick={() => setDateFormat('Mo MMM')}>
       {format(clock, dateFormat)} 
-    </color>
+    </text>
   )
 }
 
