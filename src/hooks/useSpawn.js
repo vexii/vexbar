@@ -20,7 +20,7 @@ function useSpawn(processName: string, processArgs: string[]) {
       process.kill()
     )
   }, [])
-  return [ processValue ]
+  return processValue
 }
 
 export default useSpawn
