@@ -8,7 +8,8 @@ export type ElementProps = {
   fcolor?: string,
   bcolor?: string,
   offset: number,
-
+  possition?: number,
+  index?: number,
 }
 
 class Element {
@@ -30,9 +31,11 @@ class Element {
     this.end = ''
 
     switch(type) {
-      case 'monitor': {
-        this.value = props.possition
-        this.start = `%{S${this.value}}`
+      case ('monitor'): {
+        if(!props.possition) {
+          throw new Error('<monitor> tag requires a position prop')
+        }
+        this.start = `%{S${props.possition}}`
       } break
 
       case 'left': {
@@ -48,8 +51,10 @@ class Element {
       } break
 
       case 'font': {
-        this.value = props.index
-        this.start = `%{T${this.value}}`
+        if(!props.index) {
+          throw new Error('<font> tag requires a index prop')
+        }
+        this.start = `%{T${props.index}}`
       } break
 
       case 'text': {
