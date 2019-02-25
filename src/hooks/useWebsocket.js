@@ -32,7 +32,7 @@ function useWebsocket(
     return [ isConnected, message, ws.send.bind(ws) ]
   }
 
-  return [ isConnected, message ]
+  return [ isConnected ]
 } 
 
 export default useWebsocket

@@ -4,7 +4,11 @@ import { type Lemonbar } from 'lemonbar'
 
 export type ElementProps = {
   children: React.Node,
-  onClick?: Function
+  onClick?: Function,
+  fcolor?: string,
+  bcolor?: string,
+  offset: number,
+
 }
 
 class Element {
@@ -18,7 +22,7 @@ class Element {
   children: Element[]
   bar: Lemonbar
 
-  constructor( type: string, props: Object, bar: Lemonbar): void {
+  constructor( type: string, props: ElementProps, bar: Lemonbar): void {
     this.type = type
     this.children = []
     this.bar = bar
@@ -51,6 +55,7 @@ class Element {
       case 'text': {
         this.value = props.children
       } break
+
       case 'textNode': {
         this.value = props.children
         this.isText = true
@@ -62,14 +67,22 @@ class Element {
       this.start = `%{A:${id}:}` + this.start
       this.end += '%{A}' + this.end
     }
+
     if(props.fcolor) {
       this.start = `%{F${props.fcolor}}` + this.start
       this.end = '%{F-}' + this.end
     }
+
     if(props.bcolor) {
       this.start = `%{B${props.bcolor}}` + this.start
       this.end = '%{B-}' + this.end
     }
+
+    if(props.offset) {
+      this.start = `%{O${props.offset}}` + this.start
+      this.end = '%{O-}' + this.end
+    }
+
   }
 
   appendChild(child: Element): void {
