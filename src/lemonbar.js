@@ -34,8 +34,12 @@ export default function({
 
   bar.stdout.on('data', (data) => {
     const id = data.toString().replace(/\n|'/g, "")
-    const onClick: Function = onClickFunctions.get(id)
-    onClick()
+    const onClick: ?Function = onClickFunctions.get(id)
+
+    if(onClick) {
+      onClick()
+    }
+
   })
 
   const children: Element[] = [];
@@ -45,14 +49,18 @@ export default function({
     appendChildToContainer(child: Element) {
       children.push(child);
     },
+
     registerOnClick(fn) {
       const id = uuid();
       onClickFunctions.set(id, fn)
       return id
     },
+
     flush(value) {
       bar.stdin.write(
-        children.reduce((output, node) => output.concat(node.toString()), "")
+        children.reduce((output, node) => (
+          output.concat(node.toString())
+        ), '')
       )
     }
   }
