@@ -23,7 +23,7 @@ function Battery() {
   }
   return (
     <text>
-      {icon}  {state}
+      {icon} {state} {charge && `${charge}%`}
     </text>
   )
 }
