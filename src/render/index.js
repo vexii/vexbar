@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import Reconciler from 'react-reconciler'
-import container, { type Lemonbar } from '../lemonbar'
-import { createElement, type ElementProps } from './element'
+import { type Lemonbar } from '../lemonbar'
+import { createElement, type ElementProps, type Element } from './element'
 
 type RootHostContext = Lemonbar
 
@@ -22,24 +22,23 @@ const hostConfig = {
   getChildHostContext(
     parentContext,
     fiberType,
-    hostContext: RootHostContext
+    hostContext: RootHostContext,
   ) {
-
     return { ...hostContext, type: fiberType }
   },
 
   shouldSetTextContent(
     type: string,
-    props: ElementProps
+    props: ElementProps,
   ) {
-      return false
+    return false
   },
 
   createTextInstance(
-    text: string, 
-    hostContext: RootHostContext, 
+    text: string,
+    hostContext: RootHostContext,
     childHostContext,
-    fiber
+    fiber,
   ) {
     return createElement('textNode', { children: text }, hostContext)
   },
@@ -86,7 +85,7 @@ const hostConfig = {
   },
 
   commitTextUpdate(node, oldText, newText) {
-    if(oldText !== newText) {
+    if (oldText !== newText) {
       node.updateValue(newText)
     }
   },
@@ -106,23 +105,21 @@ const hostConfig = {
 
   supportsMutation: true,
 
-};
+}
 
-const reconciler = Reconciler(hostConfig);
+const reconciler = Reconciler(hostConfig)
 
 export default function render(
   element: React.Node,
   lemonbar: Lemonbar,
-  callback: ?Function
+  callback: ?Function,
 ): void {
-
-  const container = reconciler.createContainer(lemonbar, false); 
+  const container = reconciler.createContainer(lemonbar, false)
 
   reconciler.updateContainer(
     element,
     container,
     null,
-    callback
+    callback,
   )
 }
-

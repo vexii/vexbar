@@ -7,7 +7,7 @@ import type { Element } from 'render/element'
 export type Lemonbar = {
   pid: number,
   appendChildToContainer(child: Element): void,
-  registerOnClick(fn: Function): string,
+  registerOnClick(fn: Function, props: Object): string,
   flush(): void,
 }
 
@@ -18,9 +18,14 @@ type LemonbarFlags = {
   name?: string,
 }
 
+type onClickFunctionsMap = Map<string, {
+  fn: Function,
+  props: Object
+}>
+
 export default function ({
   barColor = '#FF5AABE3',
-  font = 'xft:Source Code Pro:style=Mono:size=9',
+  font = 'xft:Source Code Pro:style=Mono:size=15',
   fontColor = '#FF3497DB',
   name = 'piebar',
 }: LemonbarFlags): Lemonbar {
@@ -28,18 +33,18 @@ export default function ({
     '-n', name,
     '-F', fontColor,
     '-B', barColor,
-    '-f', 'Font Awesome',
     '-f', font,
+    '-f', 'FontAwesome',
   ])
 
-  const onClickFunctions = new Map()
+  const onClickFunctions: onClickFunctionsMap = new Map()
 
   bar.stdout.on('data', (data) => {
     const id = data.toString().replace(/\n|'/g, '')
-    const onClick: ?Function = onClickFunctions.get(id)
+    const { fn, props } = onClickFunctions.get(id)
 
-    if (onClick) {
-      onClick()
+    if (fn) {
+      fn(props)
     }
   })
 
@@ -51,9 +56,9 @@ export default function ({
       children.push(child)
     },
 
-    registerOnClick(fn) {
+    registerOnClick(fn, props) {
       const id = uuid()
-      onClickFunctions.set(id, fn)
+      onClickFunctions.set(id, { fn, props })
       return id
     },
 

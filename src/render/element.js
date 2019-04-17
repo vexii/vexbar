@@ -30,7 +30,20 @@ export class Element {
 
   bar: Lemonbar
 
-  constructor(type: string, props: ElementProps, bar: Lemonbar): void {
+  constructor(
+    type: string,
+    {
+      possition,
+      index,
+      children,
+      onClick,
+      fcolor,
+      bcolor,
+      offset,
+      ...props
+    }: ElementProps,
+    bar: Lemonbar,
+  ): void {
     this.type = type
     this.children = []
     this.bar = bar
@@ -39,10 +52,10 @@ export class Element {
 
     switch (type) {
     case ('monitor'):
-      if (!props.possition) {
+      if (!possition) {
         throw new Error('<monitor> tag requires a position prop')
       }
-      this.start = `%{S${props.possition}}`
+      this.start = `%{S${possition}}`
       break
 
     case 'left':
@@ -58,42 +71,41 @@ export class Element {
       break
 
     case 'font':
-      if (!props.index) {
+      if (!index) {
         throw new Error('<font> tag requires a index prop')
       }
-      this.start = `%{T${props.index}}`
+      this.start = `%{T${index}}`
       break
 
-    case 'text':
-      this.value = props.children
+    case 'text': this.value = children
       break
 
     case 'textNode':
-      this.value = props.children
+      this.value = children
       this.isText = true
       break
     default:
-      throw new Error(`${type} is not a valid element`)
+      throw new Error(`<${type}> is not a valid tag`)
     }
 
-    if (props.onClick) {
-      const id = bar.registerOnClick(props.onClick)
+    if (onClick) {
+      const id = bar.registerOnClick(onClick, props)
       this.start = `%{A:${id}:}${this.start}`
       this.end += `%{A}${this.end}`
     }
 
-    if (props.fcolor) {
-      this.start = `%{F${props.fcolor}}${this.start}`
+    if (fcolor) {
+      this.start = `%{F${fcolor}}${this.start}`
       this.end = `%{F-}${this.end}`
     }
 
-    if (props.bcolor) {
-      this.start = `%{B${props.bcolor}}${this.start}`
+    if (bcolor) {
+      this.start = `%{B${bcolor}}${this.start}`
       this.end = `%{B-}${this.end}`
     }
 
-    if (props.offset) {
-      this.start = `%{O${props.offset}}${this.start}`
+    if (offset) {
+      this.start = `%{O${offset}}${this.start}`
       this.end = `%{O-}${this.end}`
     }
   }

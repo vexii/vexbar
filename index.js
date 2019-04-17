@@ -15,7 +15,7 @@ import { name } from './package.json'
 
 process.title = name
 
-function Statusbar({ monitors }) {
+function Statusbar() {
   return (
     <Provider store={store}>
       <monitor name='portrait' possition={1}>
@@ -35,8 +35,9 @@ function Statusbar({ monitors }) {
 }
 
 render(
-  <Statusbar monitors={['portrait', 'laptop']} />,
+  <Statusbar />,
   Lemonbar({
+    font: "xft:Source Code Pro:style=Mono:size=20",
     fontColor: "#d0d0d0",
     barColor: "#3a3a3a",
   })
