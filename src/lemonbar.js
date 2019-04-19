@@ -49,16 +49,16 @@ export default function({
 
   })
 
-  const children: Element[] = [];
+  const children: Element[] = []
 
   return {
     pid: bar.pid,
     appendChildToContainer(child: Element) {
-      children.push(child);
+      children.push(child)
     },
 
     registerOnClick(fn, props) {
-      const id = uuid();
+      const id = uuid()
       onClickFunctions.set(id, {fn, props})
       return id
     },

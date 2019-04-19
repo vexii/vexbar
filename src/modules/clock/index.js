@@ -19,10 +19,10 @@ function Clock({ clock }) {
   )
 }
 
-registerReducer('clock', reducer);
+registerReducer('clock', reducer)
 
 setInterval(() => {
   dispatch(actions.update(new Date()))
-}, 1000);
+}, 1000)
 
 export default connect(state => state)(Clock)
