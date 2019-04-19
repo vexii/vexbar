@@ -10,7 +10,11 @@ type BatteryState = {
 }
 
 function Battery() {
-  const [state, charge] = useSpawn('battery', ['-sn1']).split(' ')
+  const rawBattery = useSpawn('battery', ['-sn1'])
+  if (!rawBattery) {
+    return null
+  }
+  const [state, charge] = rawBattery[0].split(' ')
   let icon = ''
   if(+charge >= 25) {
     icon = "" // quater

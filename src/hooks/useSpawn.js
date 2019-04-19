@@ -13,7 +13,7 @@ function useSpawn(processName: string, processArgs: string[]) {
 
     process.stdout.on('data', data => {
       const lines = data.toString().split(/\n|'/g)
-      setProcessValue(lines[0])
+      setProcessValue(lines)
     })
 
     return () => (
