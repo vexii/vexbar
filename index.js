@@ -1,6 +1,5 @@
 #!/usr/bin/node
 // @flow
-"use strict"
 
 import * as React from 'react'
 import { Provider } from 'react-redux'
@@ -19,18 +18,18 @@ process.title = name
 function Statusbar({ monitors }) {
   return (
     <Provider store={store}>
-        <monitor name='portrait' possition={1}>
-          <left>
-            <Battery />
-            <Wifi />
-          </left>
-          <center>
-            <Title />
-          </center>
-          <right>
-            <Clock dateFormat='HH:mm' />
-          </right>
-        </monitor>
+      <monitor name='portrait' possition={1}>
+        <left>
+          <Battery />
+          <Wifi />
+        </left>
+        <center>
+          <Title />
+        </center>
+        <right>
+          <Clock dateFormat='HH:mm' />
+        </right>
+      </monitor>
     </Provider>
   )
 }

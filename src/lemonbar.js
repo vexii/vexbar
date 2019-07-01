@@ -1,6 +1,8 @@
-// @flow
+// @flow strict
+
 import { spawn } from 'child_process'
 import uuid from 'nanoid'
+import type { Element } from 'render/element'
 
 export type Lemonbar = {
   pid: number,
@@ -16,52 +18,51 @@ type LemonbarFlags = {
   name?: string,
 }
 
-export default function({
-  barColor = "#FF5AABE3", 
-  font = "xft:Source Code Pro:style=Mono:size=9",
-  fontColor = "#FF3497DB",
-  name = "piebar",
-}: LemonbarFlags): Lemonbar{
-  const bar = spawn("lemonbar", [
-    "-n", name,
-    "-F", fontColor,
-    "-B", barColor,
-    "-f", 'Font Awesome',
-    "-f", font,
+export default function ({
+  barColor = '#FF5AABE3',
+  font = 'xft:Source Code Pro:style=Mono:size=9',
+  fontColor = '#FF3497DB',
+  name = 'piebar',
+}: LemonbarFlags): Lemonbar {
+  const bar = spawn('lemonbar', [
+    '-n', name,
+    '-F', fontColor,
+    '-B', barColor,
+    '-f', 'Font Awesome',
+    '-f', font,
   ])
 
   const onClickFunctions = new Map()
 
   bar.stdout.on('data', (data) => {
-    const id = data.toString().replace(/\n|'/g, "")
+    const id = data.toString().replace(/\n|'/g, '')
     const onClick: ?Function = onClickFunctions.get(id)
 
-    if(onClick) {
+    if (onClick) {
       onClick()
     }
-
   })
 
-  const children: Element[] = [];
+  const children: Element[] = []
 
   return {
     pid: bar.pid,
     appendChildToContainer(child: Element) {
-      children.push(child);
+      children.push(child)
     },
 
     registerOnClick(fn) {
-      const id = uuid();
+      const id = uuid()
       onClickFunctions.set(id, fn)
       return id
     },
 
-    flush(value) {
+    flush() {
       bar.stdin.write(
         children.reduce((output, node) => (
           output.concat(node.toString())
-        ), '')
+        ), ''),
       )
-    }
+    },
   }
 }
