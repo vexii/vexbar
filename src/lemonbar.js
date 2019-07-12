@@ -4,7 +4,7 @@ import { spawn } from 'child_process'
 import uuid from 'nanoid'
 import type { Element } from 'render/element'
 
-export type Lemonbar = {
+export type LemonbarType = {
   pid: number,
   appendChildToContainer(child: Element): void,
   registerOnClick(fn: Function, props: Object): string,
@@ -28,7 +28,7 @@ export default function ({
   font = 'xft:Source Code Pro:style=Mono:size=15',
   fontColor = '#FF3497DB',
   name = 'piebar',
-}: LemonbarFlags): Lemonbar {
+}: LemonbarFlags): LemonbarType {
   const bar = spawn('lemonbar', [
     '-n', name,
     '-F', fontColor,
@@ -41,7 +41,12 @@ export default function ({
 
   bar.stdout.on('data', (data) => {
     const id = data.toString().replace(/\n|'/g, '')
-    const { fn, props } = onClickFunctions.get(id)
+    const onClickFunction = onClickFunctions.get(id)
+
+    if (!onClickFunction) {
+      return
+    }
+    const { fn, props } = onClickFunction
 
     if (fn) {
       fn(props)

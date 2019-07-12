@@ -1,7 +1,7 @@
 {
   "presets": [
     ["@babel/env", {
-      "modules": "umd"
+      "modules": "cjs"
     }],
     "@babel/preset-flow",
     "@babel/preset-react"
