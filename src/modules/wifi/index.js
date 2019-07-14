@@ -36,7 +36,7 @@ const wifiProcess = spawn('essid', [
 
 wifiProcess.stdout.on('data', (data) => {
   const wifiName = data.toString().replace(/\n|'/g, '')
-  dispatch(updateWifi(wifiName))
+  store.dispatch(updateWifi(wifiName))
 })
 
 function Wifi({ wifi }) {
@@ -44,8 +44,10 @@ function Wifi({ wifi }) {
     return null
   }
   return (
-    <text fcolor='#27fdf5'>
-      online: {wifi} 
+    <text fcolor="#27fdf5">
+      online:
+      {' '}
+      {wifi}
     </text>
   )
 }

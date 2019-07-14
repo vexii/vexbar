@@ -1,14 +1,17 @@
 {
   "presets": [
     ["@babel/env", {
-      "modules": "cjs"
+      "targets": {
+        "node": true
+      }
     }],
     "@babel/preset-flow",
     "@babel/preset-react"
   ],
   "plugins": [
+    "@babel/plugin-transform-modules-commonjs",
     ["module-resolver", {
-      "root": ["./src"],
+      "root": ["./src", "./node_modules"],
       "extensions": [".js"]
     }]
   ]

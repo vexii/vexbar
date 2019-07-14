@@ -1,28 +1,28 @@
 // @flow
 import * as React from 'react'
-import reducer from './reducer'
 import { connect } from 'react-redux'
-import actions from './actions'
 import { format } from 'date-fns'
 import {
-  dispatch,
-  registerReducer
+  store,
+  registerReducer,
 } from 'store'
+import actions from './actions'
+import reducer from './reducer'
 
 
 function Clock({ clock }) {
   const [dateFormat, setDateFormat] = React.useState('HH:mm')
   return (
     <text fcolor="#f765b8" onClick={() => setDateFormat('Mo MMM')}>
-      {format(clock, dateFormat)} 
+      {format(clock, dateFormat)}
     </text>
   )
 }
 
-registerReducer('clock', reducer);
+registerReducer('clock', reducer)
 
 setInterval(() => {
-  dispatch(actions.update(new Date()))
-}, 1000);
+  store.dispatch(actions.update(new Date()))
+}, 1000)
 
 export default connect(state => state)(Clock)

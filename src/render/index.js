@@ -2,10 +2,10 @@
 
 import * as React from 'react'
 import Reconciler from 'react-reconciler'
-import { type Lemonbar } from '../lemonbar'
+import { type LemonbarType } from '../lemonbar'
 import { createElement, type ElementProps, type Element } from './element'
 
-type RootHostContext = Lemonbar
+type RootHostContext = LemonbarType
 
 type ChildHostContext = {
   type: string
@@ -46,7 +46,7 @@ const hostConfig = {
   createInstance(
     type: string,
     props: ?Object,
-    rootContainerInstance: Lemonbar,
+    rootContainerInstance: LemonbarType,
     childHostContext: ChildHostContext,
     container,
   ) {
@@ -111,7 +111,7 @@ const reconciler = Reconciler(hostConfig)
 
 export default function render(
   element: React.Node,
-  lemonbar: Lemonbar,
+  lemonbar: LemonbarType,
   callback: ?Function,
 ): void {
   const container = reconciler.createContainer(lemonbar, false)
