@@ -1,6 +1,6 @@
 // @flow strict
 import * as React from 'react'
-import type { Lemonbar } from 'lemonbar'
+import type { LemonbarType } from 'lemonbar'
 
 export type ElementProps = {
   children: React.Node,
@@ -28,7 +28,7 @@ export class Element {
 
   children: Element[]
 
-  bar: Lemonbar
+  bar: LemonbarType
 
   constructor(
     type: string,
@@ -42,7 +42,7 @@ export class Element {
       offset,
       ...props
     }: ElementProps,
-    bar: Lemonbar,
+    bar: LemonbarType,
   ): void {
     this.type = type
     this.children = []
@@ -77,13 +77,15 @@ export class Element {
       this.start = `%{T${index}}`
       break
 
-    case 'text': this.value = children
+    case 'text':
+      this.value = children
       break
 
     case 'textNode':
       this.value = children
       this.isText = true
       break
+
     default:
       throw new Error(`<${type}> is not a valid tag`)
     }
@@ -147,7 +149,7 @@ export class Element {
 export function createElement(
   type: string,
   props: Object,
-  bar: Lemonbar,
+  bar: LemonbarType,
 ): Element {
   return new Element(type, props, bar)
 }
