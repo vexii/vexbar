@@ -10,7 +10,7 @@ import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
 import Wifi from 'modules/wifi'
 import Gpmd from 'modules/gpmd'
-import { store } from './store'
+import { store } from 'store'
 import { name } from '../package.json'
 
 process.title = name
