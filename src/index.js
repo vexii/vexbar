@@ -8,8 +8,6 @@ import Clock from 'modules/clock'
 import Title from 'modules/title'
 import Battery from 'modules/battery'
 import Lemonbar from 'lemonbar'
-import Wifi from 'modules/wifi'
-import Gpmd from 'modules/gpmd'
 import { store } from 'store'
 import { name } from '../package.json'
 
@@ -21,7 +19,6 @@ function Statusbar() {
       <monitor name="portrait" possition={1}>
         <left>
           <Battery />
-          <Wifi />
         </left>
         <center>
           <Title />

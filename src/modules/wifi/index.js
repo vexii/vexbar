@@ -3,28 +3,28 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { spawn } from 'child_process'
 import {
-  dispatch,
-  registerReducer
+  store,
+  registerReducer,
 } from 'store'
 
 const WIFI_CHANGED: 'WIFI_CHANGED' = 'WIFI_CHANGED'
 function updateWifi(wifiName) {
   return ({
     type: WIFI_CHANGED,
-    payload: wifiName
+    payload: wifiName,
   })
 }
 
 const initialState = ''
 
-function reducer(state = initialState, { type, payload }) {
-  switch(type) {
-    case WIFI_CHANGED: {
-      return payload
-    } 
-    default: {
-      return state
-    }
+function reducer(state = initialState, { type, payload }) {
+  switch (type) {
+  case WIFI_CHANGED: {
+    return payload
+  }
+  default: {
+    return state
+  }
   }
 }
 
@@ -39,7 +39,7 @@ wifiProcess.stdout.on('data', (data) => {
   store.dispatch(updateWifi(wifiName))
 })
 
-function Wifi({ wifi }) {
+function Wifi({ wifi }: { wifi: string }) {
   if (!wifi) {
     return null
   }
